@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservation Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+        }
+        .reservation-form {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .reservation-list {
+            margin-top: 20px;
+        }
+        .reservation-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #eee;
+            margin-bottom: 5px;
+            border-radius: 3px;
+        }
+        .remove-button {
+            background: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reservation Manager</h1>
+        <form class="reservation-form" id="reservationForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required>
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
+            <label for="time">Time:</label>
+            <input type="time" id="time" required>
+            <button type="submit">Add Reservation</button>
+        </form>
+        <div class="reservation-list" id="reservationList"></div>
+    </div>
+
+    <script>
+        document.getElementById('reservationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            
+            addReservation(name, date, time);
+            this.reset();
+        });
+
+        function addReservation(name, date, time) {
+            const reservationList = document.getElementById('reservationList');
+            const reservationItem = document.createElement('div');
+            reservationItem.className = 'reservation-item';
+            reservationItem.innerHTML = `
+                <span>${name} - ${date} at ${time}</span>
+                <button class="remove-button" onclick="removeReservation(this)">Remove</button>`;
+            reservationList.appendChild(reservationItem);
+        }
+
+        function removeReservation(button) {
+            const reservationItem = button.parentElement;
+            reservationItem.remove();
+        }
+    </script>
+</body>
+</html>
